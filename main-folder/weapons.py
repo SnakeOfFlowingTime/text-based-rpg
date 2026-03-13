@@ -7,26 +7,27 @@ class Weapon:
         self.value = value
 
 # Weapons
-fists = Weapon(name  = 'Fists',
+weapons = {
+'fists' : Weapon(name  = 'fists',
                type  = 'unarmed',
                dmg   = 1,
-               value = 0)
+               value = 0),
 
-wooden_sword = Weapon(name  = 'Wooden Sword',
+'wooden sword' : Weapon(name  = 'wooden sword',
                       type  = 'blunt',
                       dmg   = 2,
-                      value = 1)
+                      value = 1),
 
-weak_bow = Weapon(name  = 'Weak Bow',
+'weak bow' : Weapon(name  = 'weak bow',
                   type  = 'bow',
                   dmg   = 3,
-                  value = 3)
+                  value = 3),
 
-rusty_dagger = Weapon(name  = 'Rusty Dagger',
+'rusty dagger' : Weapon(name  = 'rusty dagger',
                       type  = 'short blade',
                       dmg   = 2,
-                      value = 2)
-acid_body = Weapon(name  = 'Acidic Body',
+                      value = 2),
+'acid body' : Weapon(name  = 'acidic body',
                    type  = 'acid',
                    dmg   = 2,
-                   value = 1)
+                   value = 1)}
