@@ -11,7 +11,7 @@ from characters import Character
 from characters import Enemy
 
 def enemy_spawn():
-    # This is also broken so gotta fix this after the inventory thing
+    # this "spawns" the enemy
     if battling == False:
         if current_location.danger == 'Low Danger':
             random_chance = random.randint(0, 100)
@@ -32,6 +32,7 @@ def battle(enemy):
         sys.exit()
     if enemy.hp <= 0 and player.hp > 0:
         add_to_inventory(inventory, enemy.loot)
+        characters.Enemy.ressurection(enemy)
         return False
     player.attack(target=enemy)
     print(f'{player.name} has attacked {enemy.name} with {player.weapon.name} for {player.weapon.dmg}.')
@@ -41,7 +42,7 @@ def battle(enemy):
     print(f'{enemy.name} has attacked {player.name} with {enemy.weapon.name} for {enemy.weapon.dmg}')
     print(f'{player.name} has {player.hp} health left')
     input('>')
-    
+
 # Tittle screen
 titlescreen.title_screen()
 
@@ -100,7 +101,11 @@ Weapon Damage: {player.weapon.dmg}
             add_to_inventory(inventory, output)
         else:
             print('no such item')
-    
+    # Change weapon
+    elif player_input in ['switch', 'change']:
+        print(f'to which weapon would you like to change?{player.inv}')
+        player.change_weapon()
+
     # Moving around
     elif player_input in ['move', 'go', 'travel']:
         print('where would you like to go?')
@@ -124,6 +129,8 @@ Weapon Damage: {player.weapon.dmg}
     elif player_input == 'quit':
         sys.exit()
     
+    elif player_input == '':
+        print('waited 1 turn')
     else:
         print('invalid command')
     
