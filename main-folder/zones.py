@@ -1,5 +1,3 @@
-import copy
-import weapons
 # Zones class thingy
 class Zones:
     def __init__(self, name: str, description: str, item: dict, danger: str):
@@ -13,9 +11,7 @@ class Zones:
         self.danger      = danger
 
     def getItem(self, item_name):
-        # THIS FUCKING THING I'M GOING TO CRASH OUT AAAAAAAAAAAAAA, try to fix this so that the item goes
-        # into the inventory while simultaneously dissapearing from the zone so that you can't get infinite
-        # of it
+        # Get stuff from the zone, took a while to fix
         if item_name in self.item:
             for key, value in self.item.items():
                 if item_name == key:

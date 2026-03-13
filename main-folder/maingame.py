@@ -12,14 +12,17 @@ from characters import Enemy
 
 def enemy_spawn():
     # This is also broken so gotta fix this after the inventory thing
-    if current_location.danger == 'Low Danger':
-        random_chance = random.randint(0, 100)
-        if random_chance <= 30:
-            chosen_enemy = random.choice(weak_enemies)
-            print(chosen_enemy)
-            return chosen_enemy
-        else:
-            return False
+    if battling == False:
+        if current_location.danger == 'Low Danger':
+            random_chance = random.randint(0, 100)
+            if random_chance <= 30:
+                chosen_enemy = random.choice(weak_enemies)
+                return chosen_enemy
+            else:
+                print("you are safe, for now...")
+                return False
+    else:
+        return False
 
 def battle(enemy):
     # Battle system, gotta maybe improve this later, low priority really
@@ -29,13 +32,16 @@ def battle(enemy):
         sys.exit()
     if enemy.hp <= 0 and player.hp > 0:
         add_to_inventory(inventory, enemy.loot)
+        return False
     player.attack(target=enemy)
     print(f'{player.name} has attacked {enemy.name} with {player.weapon.name} for {player.weapon.dmg}.')
     print(f'{enemy.name} has {enemy.hp} health left')
+    input('>')
     Enemy.attack(self=enemy, target=player)
     print(f'{enemy.name} has attacked {player.name} with {enemy.weapon.name} for {enemy.weapon.dmg}')
     print(f'{player.name} has {player.hp} health left')
-
+    input('>')
+    
 # Tittle screen
 titlescreen.title_screen()
 
@@ -44,13 +50,25 @@ inventory = {}
 player = Character(name='Player', max_hp=15, hp=15, inv=inventory)
 weak_enemies = [characters.goblin, characters.slime]
 current_location = zones.town_square
+battling = False
 
 # Main loop
 while True:
-    enemy_spawned = enemy_spawn()
-    if current_location.danger != 'No Danger' and enemy_spawned != '':
-        battle(enemy_spawned)
     
+    if current_location.danger != 'No Danger' and enemy_spawn()  and battling == False:
+        enemy_spawned = enemy_spawn()
+        if enemy_spawned != False:
+            battling = True
+            print(f"you've encountered a(n) {enemy_spawned.name}!")
+
+    while battling == True:
+        if battle(enemy_spawned) == False:
+            battling = False
+        else:
+            battling = True
+    
+
+
     # Inv display
     player_input = input('>').lower()
     if player_input == 'inv':
