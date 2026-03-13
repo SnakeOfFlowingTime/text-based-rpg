@@ -1,3 +1,4 @@
+import copy
 import weapons
 # Zones class thingy
 class Zones:
@@ -16,9 +17,11 @@ class Zones:
         # into the inventory while simultaneously dissapearing from the zone so that you can't get infinite
         # of it
         if item_name in self.item:
-            item_taken = self.item
-            del(self.item[item_name])
-            return item_taken
+            for key, value in self.item.items():
+                if item_name == key:
+                    item_taken = {key: value}
+                    del self.item[item_name]
+                    return item_taken
         else:
             print('invalid command')
             return False
@@ -27,16 +30,14 @@ class Zones:
 town_square = Zones('Town Square', "the center of the town, other than a small rock there's nothing to see",
                     {'small rock': 1}, 'No Danger')
 town_market = Zones('Town Market', "the economic center of the town, best place to buy and sell your wares",
-                    {'copper coin': 1}, 'No Danger')
+                    {'copper coin': 5}, 'No Danger')
 town_exit = Zones('Town Gate', "a gate leading to the outside of town, it's dangerous out there",
-                  {weapons.wooden_sword: 1}, 'No Danger')
-forest_0_0 = Zones('Low Danger Forest', 
-                    
-                    """there's a lot of trees nearby,
-                    luckly you're still near town, but be careful,
-                    you could still be ambushed by some pesky monsters""", 
-                    
-                    {'stick': 2, 'small rock': 1}, 'Low Danger')
+                  {'wooden sword': 1}, 'No Danger')
+forest_0_0 = Zones('Low Danger Forest',           
+ """there's a lot of trees nearby,
+luckly you're still near town, but be careful,
+you could still be ambushed by some pesky monsters""", 
+{'stick': 2, 'small rock': 1}, 'Low Danger')
 
 # Connection between the zones
 town_square.north = town_market
