@@ -39,4 +39,4 @@ def help_menu():
 
 # Game start
 def start_game():
-    print(zones.town_square.name + '\n' + zones.town_square.description)
+    print(zones.zones['town square'].name + '\n' + zones.zones['town square'].description)

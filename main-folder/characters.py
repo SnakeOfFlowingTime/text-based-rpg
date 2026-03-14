@@ -3,12 +3,12 @@ import weapons
 
 # Player character
 class Character:
-    def __init__(self, name: str, max_hp: int, hp: int, inv: dict):
-        self.name   = name
-        self.max_hp = max_hp
-        self.hp     = hp
-        self.weapon = weapons.weapons['fists']
-        self.inv    = inv
+    def __init__(self, name: str, max_hp: int, hp: int, inv: dict, weapon):
+        self.name     = name
+        self.max_hp   = max_hp
+        self.hp       = hp
+        self.weapon   = weapon
+        self.inv      = inv
 
     def attack(self, target):
         target.hp -= self.weapon.dmg

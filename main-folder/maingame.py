@@ -1,14 +1,37 @@
 # Imports
 import sys
+import os
 import zones
 import titlescreen
 import weapons
 import characters
 import random
+import json
 from characters import add_to_inventory
 from characters import display_inventory
 from characters import Character
 from characters import Enemy
+
+
+def save():
+    with open('save file.json', 'w') as save_file:
+        player_data = {'name': player.name,
+               'hp': player.hp,
+               'maxhp': player.max_hp,
+               'inventory': player.inv,
+               'weapon': player.weapon.name,
+               'location': saveable_location
+                    }
+        json.dump(player_data, save_file, indent=4)
+    
+    with open('zones save file.json', 'w') as zone_save_file:
+        zones_data = {'town square items': zones.zones['town square'].item,
+                'town market items': zones.zones['town market'].item,
+                'town exit items': zones.zones['town exit'].item,
+                'forest 0 0 items': zones.zones['forest 0 0'].item
+                   }
+        json.dump(zones_data, zone_save_file, indent=4)
+
 
 def enemy_spawn():
     # this "spawns" the enemy
@@ -48,14 +71,16 @@ titlescreen.title_screen()
 
 # Some variables
 inventory = {}
-player = Character(name='Player', max_hp=15, hp=15, inv=inventory)
+current_location = zones.zones['town square']
+saveable_location = current_location.id
+player = Character(name='Player', max_hp=15, hp=15, inv=inventory, weapon=weapons.weapons['fists'])
 weak_enemies = [characters.goblin, characters.slime]
-current_location = zones.town_square
 battling = False
 
 # Main loop
 while True:
-    
+
+
     if current_location.danger != 'No Danger' and enemy_spawn()  and battling == False:
         enemy_spawned = enemy_spawn()
         if enemy_spawned != False:
@@ -74,7 +99,7 @@ while True:
     player_input = input('>').lower()
     if player_input == 'inv':
         display_inventory(inventory)
-    
+
     # Look around
     elif player_input in ['look', 'examine']:
         print(current_location.name)
@@ -92,15 +117,15 @@ Weapon Damage: {player.weapon.dmg}
 """)    
     
     # Taking stuff from the zone
-    elif player_input in ['take', 'get']:
+    elif player_input in ['take', 'get', 'equip', 'swap']:
         print('what would you like to take: ' + str(current_location.item)  + '?')
         action = input('>').lower()
         if action in current_location.item:
             output = current_location.getItem(action)
-            print(output)
             add_to_inventory(inventory, output)
         else:
             print('no such item')
+    
     # Change weapon
     elif player_input in ['switch', 'change']:
         print(f'to which weapon would you like to change?{player.inv}')
@@ -127,6 +152,7 @@ Weapon Damage: {player.weapon.dmg}
     
     # Quit command
     elif player_input == 'quit':
+        save()
         sys.exit()
     
     elif player_input == '':
