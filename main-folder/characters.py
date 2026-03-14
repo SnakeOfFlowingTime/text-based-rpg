@@ -11,6 +11,7 @@ class Character:
         self.inv      = inv
 
     def attack(self, target):
+        # Attacks enemies
         target.hp -= self.weapon.dmg
 
     def change_weapon(self):
@@ -34,11 +35,11 @@ class Enemy:
         self.loot = loot
 
     def attack(self, target):
+        # Attacks player
         target.hp -= self.weapon.dmg
 
     def ressurection(self):
-        # Apparently the enemies don't respawn automaticaly, didn't think i had to do it myself, but thinking about it, it makes sense
-        if self.hp <= 0:
+        # Makes so that enemies have full health on encounter
             self.hp = self.max_hp
 # Enemies
 goblin = Enemy('Goblin', 5, 5, weapons.weapons['rusty dagger'], {'rusty dagger': 1, 'rag': 1})
@@ -52,6 +53,7 @@ def display_inventory(inventory):
     for k, v in inventory.items():
         print(str(k) + ': ' + str(v))
 
+# Add stuff to the inventory
 def add_to_inventory(inventory, item):
     for key, value in item.items():    
         if key in inventory:

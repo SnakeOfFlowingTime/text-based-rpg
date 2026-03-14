@@ -1,4 +1,4 @@
-# Imports
+# Imports, a lot of them
 import time
 import shutil
 import sys
@@ -16,7 +16,7 @@ from characters import Enemy
 
 
 def save():
-    # Should be working now
+    # Save player data
     with open('save file.json', 'w') as save_file:
         player_data = {'name': player.name,
                'hp': player.hp,
@@ -26,7 +26,7 @@ def save():
                'location': current_location.id
                     }
         json.dump(player_data, save_file, indent=4)
-    # This is working as inteded as far as i can see
+    # Save map data
     with open('zones save file.json', 'w') as zone_save_file:
         zones_data = {'town square items': Zones.zones['town square'].item,
                 'town market items': Zones.zones['town market'].item,
@@ -36,12 +36,13 @@ def save():
         json.dump(zones_data, zone_save_file, indent=4)
 
 def load():
-    # idk if this is working, test it after fixing the saving part, but it might be working
+    # Load save file
     global player_data
     with open('save file.json') as player_save:
         player_data = json.load(player_save)
 
 def wipe():
+    # Wipes save file
     player_default_start = 'player default start.json'
     zones_default_start = 'zones default start.json'
     player_save = 'save file.json'
@@ -89,6 +90,7 @@ current_location = Zones.zones['town square']
 # Title screen
 return_output =  titlescreen.title_screen_options()
 
+# Wipe save file or load save file
 if return_output == 'wipe':
     wipe()
     print('overwriting...')
@@ -109,13 +111,14 @@ current_location = Zones.zones[player_data['location']]
 # Main loop
 while True:
 
-
+    # Decides whether to spawn an enemy
     if current_location.danger != 'No Danger' and enemy_spawn()  and battling == False:
         enemy_spawned = enemy_spawn()
         if enemy_spawned != False:
             battling = True
             print(f"you've encountered a(n) {enemy_spawned.name}!")
 
+    # Battles the enemy i think
     while battling == True:
         if battle(enemy_spawned) == False:
             battling = False
@@ -188,6 +191,7 @@ Weapon Damage: {player.weapon.dmg}
     elif player_input == 'save':
         save()
     
+    # Wait a turn
     elif player_input == '':
         print('waited 1 turn')
     else:
