@@ -1,5 +1,4 @@
 import zones
-
 # Interaction
 def title_screen_options():
     import sys
@@ -39,4 +38,20 @@ def help_menu():
 
 # Game start
 def start_game():
-    print(zones.zones['town square'].name + '\n' + zones.zones['town square'].description)
+    print('do you wish to [Start a New Game (new)]')
+    print('or do you wish to [Load Game (load)]')
+    answer = input('>').lower()
+    if answer ==  'new':
+        print('are you sure, doing this will wipe your save file? Y/N')
+        yes_no = input('>').lower()
+        if yes_no == 'y':
+            print(zones.zones['town square'].name + '\n' + zones.zones['town square'].description)
+        elif yes_no == 'n':
+            title_screen()
+        else:
+            print('invalid command')
+            input('>')
+            title_screen()
+    if answer == 'load':
+        print(zones.zones['town square'].name + '\n' + zones.zones['town square'].description)
+        return 'load'
