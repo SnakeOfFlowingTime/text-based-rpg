@@ -1,0 +1,8 @@
+{
+    "name": "Player",
+    "hp": 15,
+    "maxhp": 15,
+    "inventory": {},
+    "weapon": "fists",
+    "location": "town square"
+}

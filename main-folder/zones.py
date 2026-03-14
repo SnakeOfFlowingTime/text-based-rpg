@@ -23,9 +23,11 @@ class Zones:
         else:
             print('invalid command')
             return False
-# To load the items in the zone from save file, works like a charm rn, idk how or why, but it works
+
+# Load game
 with open('zones save file.json') as zones_save:
-        zones_data = json.load(zones_save)
+    zones_data = json.load(zones_save)
+
 
 # Zones
 zones = {

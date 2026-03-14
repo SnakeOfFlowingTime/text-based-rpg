@@ -1,7 +1,9 @@
 # Imports
+import time
+import shutil
 import sys
 import os
-import zones
+import Zones
 import titlescreen
 import weapons
 import characters
@@ -14,34 +16,38 @@ from characters import Enemy
 
 
 def save():
-    # This is straigth up not working, idk why
+    # Should be working now
     with open('save file.json', 'w') as save_file:
         player_data = {'name': player.name,
                'hp': player.hp,
                'maxhp': player.max_hp,
                'inventory': player.inv,
                'weapon': player.weapon.name,
-               'location': saveable_location
+               'location': current_location.id
                     }
         json.dump(player_data, save_file, indent=4)
     # This is working as inteded as far as i can see
     with open('zones save file.json', 'w') as zone_save_file:
-        zones_data = {'town square items': zones.zones['town square'].item,
-                'town market items': zones.zones['town market'].item,
-                'town exit items': zones.zones['town exit'].item,
-                'forest 0 0 items': zones.zones['forest 0 0'].item
+        zones_data = {'town square items': Zones.zones['town square'].item,
+                'town market items': Zones.zones['town market'].item,
+                'town exit items': Zones.zones['town exit'].item,
+                'forest 0 0 items': Zones.zones['forest 0 0'].item
                    }
         json.dump(zones_data, zone_save_file, indent=4)
 
 def load():
     # idk if this is working, test it after fixing the saving part, but it might be working
-    global player_data, zones_data
+    global player_data
     with open('save file.json') as player_save:
         player_data = json.load(player_save)
-    with open('zones save file.json') as zones_save:
-        zones_data = json.load(zones_save)
 
-
+def wipe():
+    player_default_start = 'player default start.json'
+    zones_default_start = 'zones default start.json'
+    player_save = 'save file.json'
+    zones_save = 'zones save file.json'
+    shutil.copy2(player_default_start, player_save)
+    shutil.copy2(zones_default_start, zones_save)
 
 def enemy_spawn():
     # this "spawns" the enemy
@@ -64,7 +70,7 @@ def battle(enemy):
         input('>')
         sys.exit()
     if enemy.hp <= 0 and player.hp > 0:
-        add_to_inventory(inventory, enemy.loot)
+        add_to_inventory(player.inv, enemy.loot)
         characters.Enemy.ressurection(enemy)
         return False
     player.attack(target=enemy)
@@ -78,22 +84,27 @@ def battle(enemy):
 
 # Some variables, suspect moving these breaks the code
 player_data = {}
-zones_data = {}
-inventory = {}
-current_location = zones.zones['town square']
-saveable_location = current_location.id
-current_location = zones.zones[saveable_location]
+current_location = Zones.zones['town square']
 
 # Title screen
-if titlescreen.title_screen() == 'load':
+return_output =  titlescreen.title_screen_options()
+
+if return_output == 'wipe':
+    wipe()
+    print('overwriting...')
+    time.sleep(1)
+    print(Zones.zones['town square'].name + '\n' + Zones.zones['town square'].description)
     load()
-    print(zones.zones[saveable_location].name + '\n' + zones.zones[saveable_location].description)
+elif return_output == 'load':
+    load()
+    print(Zones.zones[player_data['location']].name + '\n' + Zones.zones[player_data['location']].description)
 
 # Some variables
 player = Character(name=player_data['name'], max_hp=player_data['maxhp'], hp=player_data['hp'],
                    inv=player_data['inventory'], weapon=weapons.weapons[player_data['weapon']])
 weak_enemies = [characters.goblin, characters.slime]
 battling = False
+current_location = Zones.zones[player_data['location']]
 
 # Main loop
 while True:
@@ -116,7 +127,7 @@ while True:
     # Inv display
     player_input = input('>').lower()
     if player_input == 'inv':
-        display_inventory(inventory)
+        display_inventory(player.inv)
 
     # Look around
     elif player_input in ['look', 'examine']:
@@ -124,8 +135,6 @@ while True:
         print(current_location.description)
         print('you see: ' + str(current_location.item) + ' in this place')
     
-    elif player_input == 'save':
-        save()
     # Status menu
     elif player_input in ['status', 'stats']:
         print(
@@ -137,17 +146,17 @@ Weapon Damage: {player.weapon.dmg}
 """)    
     
     # Taking stuff from the zone
-    elif player_input in ['take', 'get', 'equip', 'swap']:
+    elif player_input in ['take', 'get']:
         print('what would you like to take: ' + str(current_location.item)  + '?')
         action = input('>').lower()
         if action in current_location.item:
             output = current_location.getItem(action)
-            add_to_inventory(inventory, output)
+            add_to_inventory(player.inv, output)
         else:
             print('no such item')
     
     # Change weapon
-    elif player_input in ['switch', 'change']:
+    elif player_input in ['switch', 'change', 'equip', 'swap']:
         print(f'to which weapon would you like to change?{player.inv}')
         player.change_weapon()
 
@@ -174,6 +183,10 @@ Weapon Damage: {player.weapon.dmg}
     elif player_input == 'quit':
         save()
         sys.exit()
+    
+    # Save
+    elif player_input == 'save':
+        save()
     
     elif player_input == '':
         print('waited 1 turn')

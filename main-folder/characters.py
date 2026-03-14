@@ -16,7 +16,7 @@ class Character:
     def change_weapon(self):
         # Allows the player to change weapon
         player_input = input('>').lower()
-        if player_input in self.inv:
+        if player_input in self.inv and player_input in weapons.weapons.keys():
             add_to_inventory(self.inv, {self.weapon.name: 1})
             try:
                 self.weapon = weapons.weapons[player_input]

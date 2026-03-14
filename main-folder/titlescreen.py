@@ -1,66 +1,50 @@
-import zones
-# Interaction
+import Zones
+import json
+# Main Menu, this sucks, had 3 functions at the start, now it's all in one
 def title_screen_options():
     import sys
-    option = input('>').lower()
-    if option == 'play':
-        if start_game() == 'load':
-            return 'load'
-    if option == 'help':
-        help_menu()
-    if option == 'quit':
-        sys.exit()
-    while option not in ['play', 'help', 'quit']:
-        print('please enter a valid option')
-        option = input('>').lower()
-        if option == 'play':
-            if start_game() == 'load':
-                return 'load'
-        if option == 'help':
-            help_menu()
-        if option == 'quit':
-            sys.exit()
-
-# Main menu
-def title_screen():
     import os
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print('Welcome to Placeholder Text-Based RPG Game')
-    print("Type 'play' to start the game")
-    print("Type 'help' to open the help menu")
-    print("Type 'quit' to close the game")
-    if title_screen_options() == 'load':
-        return 'load'
+    valid_command = False
+    while valid_command == False: 
 
-# Help menu
-def help_menu():
-    print("use 'go' to move, 'take' to take items, 'look' to survey the surroundings")
-    print("Type 'back' to go back to the main menu")
-    if input('>').lower() == 'back':
-        title_screen()
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print('Welcome to Placeholder Text-Based RPG Game')
+        print("Type 'play' to start the game")
+        print("Type 'help' to open the help menu")
+        print("Type 'quit' to close the game") 
+        option = input('>').lower()
+        
+        if option == 'play':
+            valid_command = True
+            print('do you wish to [Start a New Game (new)]')
+            print('or do you wish to [Load Game (load)]')
+            answer = input('>').lower()
+            
+            if answer == 'load':
+                return 'load'
+            
+            elif answer == 'new':
+                print('are you sure, doing this will wipe your save file? Y/N')
+                yes_no = input('>').lower()
+                
+                if yes_no == 'y':
+                    return 'wipe'
 
-# Game start
-def start_game():
-    print('do you wish to [Start a New Game (new)]')
-    print('or do you wish to [Load Game (load)]')
-    answer = input('>').lower()
-    if answer == 'load':
-        return 'load'
-    elif answer == 'new':
-        print('are you sure, doing this will wipe your save file? Y/N')
-        yes_no = input('>').lower()
-        if yes_no == 'y':
-            print(zones.zones['town square'].name + '\n' + zones.zones['town square'].description)
-            return 'y'       
-        elif yes_no == 'n':
-            title_screen()
-            return 'n'       
-        else:
-            print('invalid command')
+                elif yes_no == 'n':   
+                    valid_command = False
+            else:
+                print("invalid command, command must be 'new' or 'load'")
+                valid_command = False
+        
+        if option == 'help':
+            valid_command = False
+            print("use 'go' to move, 'take' to take items, 'look' to survey the surroundings")
             input('>')
-            title_screen()
-            return 'invalid command'
-    else:
-        print('invalid command')
-        title_screen()
-        return 'invalid command'
+        
+        if option == 'quit':
+            valid_command = True
+            sys.exit()
+        
+        else:
+            print("no such command, valid commands: 'play', 'help', 'quit'")
+            valid_command = False

@@ -1,0 +1,15 @@
+{
+    "town square items": {
+        "small rock": 1
+    },
+    "town market items": {
+        "copper coin": 5
+    },
+    "town exit items": {
+        "wooden sword": 1
+    },
+    "forest 0 0 items": {
+        "stick": 2,
+        "small rock": 1
+    }
+}
