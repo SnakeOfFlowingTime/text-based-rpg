@@ -1,3 +1,4 @@
+import json
 # Zones class thingy
 class Zones:
     def __init__(self, id: str, name: str, description: str, item: dict, danger: str):
@@ -22,20 +23,23 @@ class Zones:
         else:
             print('invalid command')
             return False
+# To load the items in the zone from save file, works like a charm rn, idk how or why, but it works
+with open('zones save file.json') as zones_save:
+        zones_data = json.load(zones_save)
 
 # Zones
 zones = {
 'town square': Zones('town square', 'Town Square', "the center of the town, other than a small rock there's nothing to see",
-                    {'small rock': 1}, 'No Danger'),
+                    zones_data['town square items'], 'No Danger'),
 'town market': Zones('town market', 'Town Market',"the economic center of the town, best place to buy and sell your wares",
-                    {'copper coin': 5}, 'No Danger'),
+                    zones_data['town market items'], 'No Danger'),
 'town exit': Zones('town exit', 'Town Gate',"a gate leading to the outside of town, it's dangerous out there",
-                  {'wooden sword': 1}, 'No Danger'),
+                  zones_data['town exit items'], 'No Danger'),
 'forest 0 0': Zones('forest 0 0', 'Low Danger Forest',
  """there's a lot of trees nearby,
 luckly you're still near town, but be careful,
 you could still be ambushed by some pesky monsters""", 
-{'stick': 2, 'small rock': 1}, 'Low Danger'),
+zones_data['forest 0 0 items'], 'Low Danger'),
 }
 
 # Connection between the zones
