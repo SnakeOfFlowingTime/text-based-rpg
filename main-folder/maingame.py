@@ -38,7 +38,7 @@ def save():
         json.dump(merchant_data, merchant_save, indent=4)
 
 def load():
-    # Load save file
+    # Load player data
     global player_data
     with open('save file.json') as player_save:
         player_data = json.load(player_save)
@@ -139,7 +139,7 @@ while True:
 
     # Inv display
     player_input = input('>').lower()
-    if player_input == 'inv':
+    if player_input in ['inv', 'inventory', 'items']:
         display_inventory(player.inv)
 
     # Look around
@@ -162,17 +162,19 @@ Weapon Damage: {player.weapon.dmg}  Armor Defense: {player.armor.defense}
 Money: {player.money}
 """)    
     
+    # Selling stuff
     elif player_input in ['sell']:
         print(f'which merchant would you like to sell stuff to: {current_location.npc}?')
         answer = input('>').lower()
         if answer in current_location.npc:
-            npcs.merchants[current_location.npc].buy(player)
-
+            npcs.merchants[answer].buy(player)
+    
+    # Buying stuff
     elif player_input in ['buy', 'acquire']:
         print(f'from which merchant would you like to buy stuff from: {current_location.npc}?')
         answer = input('>').lower()
         if answer in current_location.npc:
-            npcs.merchants[current_location.npc].sell(player)
+            npcs.merchants[answer].sell(player)
 
     # Taking stuff from the zone
     elif player_input in ['take', 'get']:

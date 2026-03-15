@@ -2,7 +2,7 @@ import json
 import npcs
 # Zones class thingy
 class Zones:
-    def __init__(self, id: str, name: str, description: str, item: dict, danger: str, npc):
+    def __init__(self, id: str, name: str, description: str, item: dict, danger: str, npc: list):
         self.id          = id
         self.name        = name
         self.description = description
@@ -36,7 +36,7 @@ zones = {
 'town square': Zones('town square', 'Town Square', "the center of the town, other than a small rock there's nothing to see",
                     zones_data['town square items'], 'No Danger',  None),
 'town market': Zones('town market', 'Town Market',"the economic center of the town, best place to buy and sell your wares",
-                    zones_data['town market items'], 'No Danger', 'town merchant'),
+                    zones_data['town market items'], 'No Danger', ['town merchant']),
 'town exit': Zones('town exit', 'Town Gate',"a gate leading to the outside of town, it's dangerous out there",
                   zones_data['town exit items'], 'No Danger', None),
 'forest 0 0': Zones('forest 0 0', 'Low Danger Forest',
