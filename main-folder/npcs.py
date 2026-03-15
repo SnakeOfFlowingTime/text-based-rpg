@@ -15,17 +15,39 @@ class Merchant:
         print(target.inv)
         sell = input('>').lower()
         try:
-            if sell in target.inv:
+            if sell in target.inv and sell in items.items or sell in weapons.weapons or sell in armor.armors:
                 print('and how many would you like to sell?')
                 number = input('>').lower()
                 number = int(number)
-                if number >= 0 and items.items[sell].value > 0 or weapons.weapons[sell].value > 0 or armor.armors[sell].value > 0:
+                if number >= 0 and sell in items.items:
                     if number < target.inv[sell]:
                         target.inv[sell] -= number
-                        target.money += items.items[sell].value * number or weapons.weapons[sell].value * number or armor.armors[sell].value * number
+                        target.money += items.items[sell].value * number
                         print(f"you've sold: {number} {sell}")
                     elif number == target.inv[sell]:
-                        target.money += items.items[sell].value * number or weapons.weapons[sell].value * number or armor.armors[sell].value * number
+                        target.money += items.items[sell].value * number
+                        del target.inv[sell]
+                        print(f"you've sold: {number} {sell}")
+                    else:
+                        print(f"you don't have that much {sell} to sell")
+                elif number >= 0 and sell in weapons.weapons:
+                    if number < target.inv[sell]:
+                        target.inv[sell] -= number
+                        target.money += weapons.weapons[sell].value * number
+                        print(f"you've sold: {number} {sell}")
+                    elif number == target.inv[sell]:
+                        target.money += weapons.weapons[sell].value * number
+                        del target.inv[sell]
+                        print(f"you've sold: {number} {sell}")
+                    else:
+                        print(f"you don't have that much {sell} to sell")
+                elif number >= 0 and sell in armor.armors:
+                    if number < target.inv[sell]:
+                        target.inv[sell] -= number
+                        target.money += armor.armors[sell].value * number
+                        print(f"you've sold: {number} {sell}")
+                    elif number == target.inv[sell]:
+                        target.money += armor.armors[sell].value * number
                         del target.inv[sell]
                         print(f"you've sold: {number} {sell}")
                     else:
