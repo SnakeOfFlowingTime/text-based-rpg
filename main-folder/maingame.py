@@ -25,6 +25,8 @@ def save():
                'inventory': player.inv,
                'weapon': player.weapon.id,
                'armor': player.armor.id,
+               'level': player.lvl,
+               'exp': player.exp,
                'location': current_location.id
                     }
         json.dump(player_data, save_file, indent=4)
@@ -74,6 +76,7 @@ def battle(enemy):
         sys.exit()
     if enemy.hp <= 0 and player.hp > 0:
         add_to_inventory(player.inv, enemy.loot)
+        player.exp += enemy.expvalue
         characters.Enemy.ressurection(enemy)
         return False
     player.attack(target=enemy)
@@ -106,7 +109,7 @@ elif return_output == 'load':
 # Some variables
 player = Character(name=player_data['name'], max_hp=player_data['maxhp'], hp=player_data['hp'],
                    inv=player_data['inventory'],armor=armor.armors[player_data['armor']],
-                    weapon=weapons.weapons[player_data['weapon']])
+                    weapon=weapons.weapons[player_data['weapon']], lvl=player_data['level'], exp=player_data['exp'])
 weak_enemies = [characters.goblin, characters.slime]
 battling = False
 current_location = Zones.zones[player_data['location']]
@@ -145,13 +148,13 @@ while True:
     elif player_input in ['status', 'stats']:
         print(
 f"""Name: {player.name} 
+Level: {player.lvl}
 Health: {player.hp}/{player.max_hp} 
-Weapon Name: {player.weapon.name}
-Weapon Type: {player.weapon.type}
-Weapon Damage: {player.weapon.dmg}
-Armor Name: {player.armor.name}
-Armor Type: {player.armor.type}
-Armor Defense: {player.armor.defense}
+Exp: {player.exp}/{player.lvl * 100}
+Weapon Name: {player.weapon.name}   Armor Name: {player.armor.name} 
+Weapon Type: {player.weapon.type}   Armor Type: {player.armor.type}
+Weapon Damage: {player.weapon.dmg}  Armor Defense: {player.armor.defense}
+
 """)    
     
     # Taking stuff from the zone
@@ -181,6 +184,15 @@ Armor Defense: {player.armor.defense}
     elif player_input in ['use', 'consume']:
         print(f"which item would you like to {player_input}? {player.inv}")
         player.heal_self()
+    
+    # Level up
+    elif player_input in ['lvl up', 'lvlup', 'level up']:
+        player.lvlup()
+    
+    # Rest to heal
+    elif player_input in ['rest', 'sleep']:
+        player.rest()
+        print('you have rested')
 
     # Moving around
     elif player_input in ['move', 'go', 'travel']:

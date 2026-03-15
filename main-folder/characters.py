@@ -2,20 +2,48 @@
 import weapons
 import armor
 import items
+import time
 
 # Player character
 class Character:
-    def __init__(self, name: str, max_hp: int, hp: int, inv: dict, weapon, armor):
+    def __init__(self, name: str, max_hp: int, hp: int, inv: dict, weapon, armor, lvl: int, exp: int):
         self.name     = name
         self.max_hp   = max_hp
         self.hp       = hp
         self.weapon   = weapon
         self.inv      = inv
         self.armor = armor
+        self.lvl = lvl
+        self.exp = exp
+
 
     def attack(self, target):
         # Attacks enemies
         target.hp -= (self.weapon.dmg - target.armor.defense)
+
+    def lvlup(self):
+        if self.exp >= self.lvl * 100:
+            self.exp = self.exp - self.lvl * 100
+            self.lvl += 1
+            self.max_hp = self.max_hp + (self.lvl - 1) * 2
+            self.hp = self.max_hp
+            print(f'you have succefuly leveled up, you are now level: {self.lvl}')
+            print(f'your remaining experience: {self.exp} points')
+        else:
+            print(f"you don't have enough experience points to level up, current exp: {self.exp}, exp needed to level up: {self.lvl * 100}")
+
+    def rest(self):
+        print('how long to rest?')
+        number = input('>')
+        number = int(number)
+        try:
+            print(f'resting for {number * 2} hours...')
+            time.sleep(number * 2)
+            self.hp = self.hp + number
+            if self.hp > self.max_hp:
+                self.hp = self.max_hp 
+        except ValueError:
+            print('you must enter a number in digit form')
 
     def change_weapon(self):
         # Allows the player to change weapon
@@ -70,13 +98,14 @@ class Character:
 
 # Enemies character
 class Enemy:
-    def __init__(self, name: str, max_hp: int, hp: int, weapon, armor, loot: dict):
+    def __init__(self, name: str, max_hp: int, hp: int, weapon, armor, expvalue: int, loot: dict):
         self.name   = name
         self.max_hp = max_hp
         self.hp     = hp
         self.weapon = weapon
         self.loot = loot
         self.armor = armor
+        self.expvalue = expvalue
 
     def attack(self, target):
         # Attacks player
@@ -86,8 +115,8 @@ class Enemy:
         # Makes so that enemies have full health on encounter
             self.hp = self.max_hp
 # Enemies
-goblin = Enemy('Goblin', 5, 5, weapons.weapons['rusty dagger'], armor.armors['no armor'], {'rusty dagger': 1, 'rag': 1})
-slime = Enemy('Slime', 8, 8, weapons.weapons['acid body'], armor.armors['no armor'], {'slime chunk': 1})
+goblin = Enemy('Goblin', 5, 5, weapons.weapons['rusty dagger'], armor.armors['no armor'], 10,{'rusty dagger': 1, 'rag': 1})
+slime = Enemy('Slime', 8, 8, weapons.weapons['acid body'], armor.armors['no armor'], 20,{'slime chunk': 1})
 
 
 
