@@ -66,11 +66,14 @@ def wipe():
     shutil.copy2(zones_default_start, zones_save)
     shutil.copy2(merchant_default_start, merchant_save)
 
-def enemy_spawn():
+def enemy_spawn(number):
     # this "spawns" the enemy
     if battling == False:
         if current_location.danger == 'Low Danger':
-            random_chance = random.randint(0, 100)
+            if number == 1:
+                random_chance = 0
+            else:
+                random_chance = random.randint(0, 100)
             if random_chance <= 30:
                 chosen_enemy = random.choice(weak_enemies)
                 return chosen_enemy
@@ -159,8 +162,8 @@ current_location = Zones.zones[player_data['location']]
 while True:
 
     # Decides whether to spawn an enemy
-    if current_location.danger != 'No Danger' and enemy_spawn()  and battling == False:
-        enemy_spawned = enemy_spawn()
+    if current_location.danger != 'No Danger' and enemy_spawn(0) and battling == False:
+        enemy_spawned = enemy_spawn(0)
         if enemy_spawned != False:
             battling = True
             print(f"you've encountered a(n) {enemy_spawned.name}!")
@@ -187,6 +190,18 @@ while True:
             print('you see a(n): ' + str(current_location.npc))
         print('you see: ' + str(current_location.item) + ' in this place')
     
+    # Starts a fight
+    elif player_input in ['fight', 'battle']:
+        if current_location.danger != 'No Danger' and enemy_spawn(1) and battling == False:
+            enemy_spawned = enemy_spawn(1)
+        else:
+            enemy_spawned = False
+        if enemy_spawned != False:
+            battling = True
+            print(f"you've encountered a(n) {enemy_spawned.name}!")
+        else:
+            print(f"there's no one to {player_input} here")
+
     # Status menu
     elif player_input in ['status', 'stats']:
         print(
@@ -257,6 +272,7 @@ Money: {player.money}
         # Save just in case someone inputs 99999999... and get stuck waiting for 2 irl years or smth
         save()
         player.rest()
+        save()
 
     # Moving around
     elif player_input in ['move', 'go', 'travel', 'm']:
