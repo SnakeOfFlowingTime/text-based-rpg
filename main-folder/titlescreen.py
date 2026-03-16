@@ -74,6 +74,8 @@ def title_screen_options():
 | ['lvl up', 'lvlup', 'level up'] to level up, leveling up increases max hp;                                                   |
 |                                                                                                                              |
 | Note 2: you can use 'Enter' to skip 1 turn.                                                                                  |
+|                                                                                                                              |
+| Important: as the game is still in development bugs and crashes will definitely happen, so remember to save your game often. |
 ================================================================================================================================
 """)
             input('>')
