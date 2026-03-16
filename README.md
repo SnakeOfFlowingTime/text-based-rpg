@@ -1,15 +1,12 @@
 # text-based-rpg
-My first project, i'm still learning python
+attempt at writing a proper readme:
 
-was getting bored so i thought of making this for fun
+this is a project i'm working on for fun while i learn python, it's a text-based rpg, if you can call it that, it's very simple at the moment of writing this and lacks content
 
-so far it's going well, shouldn't take to long before all the basic systems
-are in and i add some content to make it playable, though the code is an absolute mess
-so idk how long it will take exactly
+the help menu contains the valid commands for each action and can be acessed by typing 'help' in the main menu
 
-python sucks when it comes to sharing, such selfishness, i can't for the life of me manage to make this into a working .exe
+remember to save the game often as it definitely has bugs and it will definitely crash your game if you run into them
 
-nvm, managed to do it, still sucked though, all the documentation online only explains the first half of the ordeal clearly, the rest i had to piece
-from many different sources, i even stepped so low as to copy ai code (function to get the path of the .json files the .exe needs, this also happens to be the part that is not mentioned in any of the reddit posts i saw, only mention of this was in the pyinstaller manual, in a very confusing manner, and the google ai thing, which also conveniently had the code i needed, sorry guys, couldn't resist the temptation)
+the save files, if you want to modify them, along with the readme and license are in the _internal folder
 
-if you somehow end up playing this, please let me know of any suggestion you have or bug you found
+idk what constitutes a proper readme so this will have to do
