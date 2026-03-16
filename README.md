@@ -11,4 +11,6 @@ python sucks so much, i can't for the life of me manage to make this into a work
 apparently projects in other languages are much easier to share
 
 nvm, managed to do it, still sucked though, all the documentation online only explains the first half of the ordeal clearly, the rest i had to piece
-from many different sources, i even stepped so low as to copy code and use ai to get a clear answer, but now it works so it was worth it
+from many different sources, i even stepped so low as to copy ai code (function to get the path of the .json files the .exe needs, this also happens to be the part that is not mentioned in any of the reddit posts i saw, only mention of this was in the pyinstaller manual, in a very confusing manner, and the google ai thing, which also conveniently had the code i needed, sorry guys, couldn't resist the temptation)
+
+if you somehow end up playing this, please let me know of any suggestion you have or bug you found
