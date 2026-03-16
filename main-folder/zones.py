@@ -1,5 +1,4 @@
-import json
-import npcs
+import json, os, sys
 # Zones class thingy
 class Zones:
     def __init__(self, id: str, name: str, description: str, item: dict, danger: str, npc: list):
@@ -26,8 +25,19 @@ class Zones:
             print('invalid command')
             return False
 
+def file_path(relative_path):
+    # Python is such a selfish language, can't even share my work easily D:
+    # i have no idea what this does exactly, i'm pissed i had to copy code
+    # for such a basic reason as letting other people run my code easily
+    try:
+        base_path = sys._MEIPASS
+    except Exception: 
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
 # Load game
-with open('zones save file.json') as zones_save:
+zones_file = file_path('zones save file.json')
+with open(zones_file) as zones_save:
     zones_data = json.load(zones_save)
 
 

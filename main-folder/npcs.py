@@ -1,4 +1,4 @@
-import items, weapons, armor, json
+import items, weapons, armor, json, os, sys
 from characters import add_to_inventory
 # Merchant npcs
 class Merchant:
@@ -153,8 +153,19 @@ class Merchant:
         except ValueError:
             print('must be a number in digit form')
 
+def file_path(relative_path):
+    # Python is such a selfish language, can't even share my work easily D:
+    # i have no idea what this does exactly, i'm pissed i had to copy code
+    # for such a basic reason as letting other people run my code easily
+    try:
+        base_path = sys._MEIPASS
+    except Exception: 
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
 # Load game
-with open('merchant save file.json') as merchant_save:
+merchant_file = file_path('merchant save file.json')
+with open(merchant_file) as merchant_save:
     merchant_data = json.load(merchant_save)
 
 
