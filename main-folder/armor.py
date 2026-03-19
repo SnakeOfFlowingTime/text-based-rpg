@@ -20,4 +20,5 @@ armors = {
 
 'hardened mud layer': Armor(name = 'Hardened Mud Layer', id = 'hardened mud layer', type = 'earth', defense = 1, value= 0),
 
+'wood armor': Armor(name = 'Wood Armor', id =  'wood armor', type = 'wood', defense = 2, value = 30),
 }

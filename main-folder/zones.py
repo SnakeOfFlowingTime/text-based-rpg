@@ -47,6 +47,11 @@ zones = {
                     item = zones_data['town market items'], danger = 'No Danger', npc = ['town merchant']),
 'town exit': Zones(name = 'Town Gate', id = 'town exit', description = "a gate leading to the outside of town, it's dangerous out there",
                   item = zones_data['town exit items'], danger = 'No Danger', npc = None),
+
+"adventurer guild": Zones(name = "The Adventurer's Guild", id = "adventurer guild",
+description = 'place where adventurers accept task posted by clients in exchange for a reward',
+item = zones_data['adventurer guild items'], danger = 'No Danger', npc = None),
+
 'very low danger forest': Zones(name = 'Very Low Danger Forest', id ='very low danger forest',
  description = """there's a lot of trees nearby,
 luckly you're still near town, but be careful,
@@ -63,6 +68,8 @@ danger = 'Low Danger', npc = None),
 # Connection between the zones
 zones['town square'].north = zones['town market']
 zones['town square'].south = zones['town exit']
+zones['town square'].west = zones['adventurer guild']
+zones['adventurer guild'].east = zones['town square']
 zones['town exit'].north = zones['town square']
 zones['town exit'].south = zones['very low danger forest']
 zones['town market'].south = zones['town square']

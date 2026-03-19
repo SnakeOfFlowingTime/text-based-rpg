@@ -23,6 +23,9 @@ weapons = {
 
 'boar tusk': Weapon(name = 'Boar Tusk', id = 'boar tusk', type = 'piercing', dmg = 3, value = 5),
 
-'iron dagger': Weapon(name = 'Iron Dagger', id = 'iron dagger', type = 'slashing', dmg = 3, value = 8)
+'iron dagger': Weapon(name = 'Iron Dagger', id = 'iron dagger', type = 'slashing', dmg = 3, value = 8),
 
+'wolf bite': Weapon(name = 'Wolf Bite', id = 'wolf bite', type = 'piercing', dmg = 3, value = 0),
+
+'heavy iron stick': Weapon(name = 'Heavy Iron Stick', id = 'heavy iron stick', type = 'blunt', dmg = 4, value = 30)
 }

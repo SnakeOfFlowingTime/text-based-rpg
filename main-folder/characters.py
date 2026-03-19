@@ -156,5 +156,9 @@ enemies = {
                armor = armor.armors['no armor'], expvalue = 20, loot = {'slime chunk': 1}),                
 'wild boar': Enemy(name = 'Wild Boar', max_hp = 20, hp = 20, weapon = weapons.weapons['boar tusk'],
                    armor = armor.armors['hardened mud layer'], expvalue = 80, 
-                   loot = {'boar tusk': 2, 'boar skin': 1, 'strong animal bone': 10, 'redmeat piece': 15, 'boar hoof': 4})
+                   loot = {'boar tusk': 2, 'boar skin': 1, 'strong animal bone': 10, 'meat piece': 15, 'boar hoof': 4}),
+'wolf': Enemy(name = 'Wolf', max_hp = 15, hp = 15, weapon = weapons.weapons['wolf bite'], armor = armor.armors['no armor'], expvalue = 50,
+            loot = {'wolf skin': 1, 'wolf tooth': 4, 'strong animal bone': 20, 'meat piece': 15, 'wolf claw': 18}),
+                
                 }
+

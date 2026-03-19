@@ -90,6 +90,7 @@ def enemy_spawn(number):
                 return chosen_enemy
             elif random_chance <= 60 and random_chance > 30:
                 chosen_enemy = random.choice(very_weak_enemies)
+                return chosen_enemy
             else:
                 print("you are safe, for now...")
                 return False
@@ -176,7 +177,7 @@ player = Character(name=player_data['name'], max_hp=player_data['maxhp'], hp=pla
                     exp=player_data['exp'], money=player_data['money'])
 
 very_weak_enemies = [characters.enemies['goblin'], characters.enemies['slime']]
-weak_enemies = [characters.enemies['wild boar']]
+weak_enemies = [characters.enemies['wild boar'], characters.enemies['wolf']]
 battling = False
 current_location = Zones.zones[player_data['location']]
 
