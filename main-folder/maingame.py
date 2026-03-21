@@ -177,7 +177,7 @@ player = Character(name=player_data['name'], max_hp=player_data['maxhp'], hp=pla
                     exp=player_data['exp'], money=player_data['money'])
 
 very_weak_enemies = [characters.enemies['goblin'], characters.enemies['slime']]
-weak_enemies = [characters.enemies['wild boar'], characters.enemies['wolf']]
+weak_enemies = [characters.enemies['wild boar'], characters.enemies['wolf'], characters.enemies['bear']]
 battling = False
 current_location = Zones.zones[player_data['location']]
 

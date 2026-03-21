@@ -161,7 +161,8 @@ enemies = {
             loot = {'wolf skin': 1, 'wolf tooth': 4, 'strong animal bone': 20, 'meat': 15, 'wolf claw': 18}),
 'big rat': Enemy(name = 'Magic Mutated Rat', max_hp= 4, hp = 4, weapon = weapons.weapons['rat bite'],
                 armor = armor.armors['no armor'], expvalue = 5, 
-                loot = {'magic mutated rat skin': 1, 'meat': 3})
-                
+                loot = {'magic mutated rat skin': 1, 'meat': 3}),
+'bear': Enemy(name = 'Bear', max_hp = 25, hp = 25, weapon = weapons.weapons['bear punch'], armor = armor.armors['no armor'],
+            expvalue = 150, loot = {'bear skin': 1, 'strong animal bone': 50, 'meat': 50, 'bear paw': 4})
                 }
 

@@ -32,4 +32,8 @@ weapons = {
 'iron scythe': Weapon(name = 'Iron Scythe', id = 'iron scythe', type = 'slashing', dmg = 3, value = 20),
 
 'rat bite': Weapon(name = 'Rat Bite', id = 'rat bite', type = 'piercing', dmg = 1, value = 0),
+
+'refined iron sword': Weapon(name = 'Refined Iron Sword', id = 'refined iron sword', type = 'slashing', dmg = 8, value = 200),
+
+'bear punch': Weapon(name = 'Bear Punch', id = 'bear punch', type = 'blunt', dmg = 4, value = 0)
 }

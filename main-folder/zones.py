@@ -48,7 +48,7 @@ zones = {
 'town exit': Zones(name = 'Town Gate', id = 'town exit', description = "a gate leading to the outside of town, it's dangerous out there",
                   item = zones_data['town exit items'], danger = 'No Danger', npc = None),
 
-"adventurer guild": Zones(name = "The Adventurer's Guild", id = "adventurer guild",
+'adventurer guild': Zones(name = "The Adventurer's Guild", id = 'adventurer guild',
 description = 'place where adventurers accept task posted by clients in exchange for a reward',
 item = zones_data['adventurer guild items'], danger = 'No Danger', npc = None),
 
@@ -65,7 +65,11 @@ danger = 'Low Danger', npc = None),
 
 'town farm': Zones(name = 'Town Farms', id = 'town farm', 
 description = 'the farms east of town, the source of most food in town',
-item = zones_data['town farm items'], danger = 'No Danger', npc = None)
+item = zones_data['town farm items'], danger = 'No Danger', npc = None),
+
+'alchemy guild': Zones(name = "Alchemist's Guild", id = 'alchemy guild', 
+description = "unlike the adventurer's guild, this place is as luxurious as it gets, being responsible for ranking, protecting the rights of, and representing the most respected profession of the continent: alchemists",
+item = zones_data['alchemy guild items'], danger = 'No danger', npc = None),
 }
 
 # Connection between the zones
@@ -75,6 +79,8 @@ zones['town square'].west = zones['adventurer guild']
 zones['town square'].east = zones['town farm']
 zones['town farm'].west = zones['town square']
 zones['adventurer guild'].east = zones['town square']
+zones['adventurer guild'].north = zones['alchemy guild']
+zones['alchemy guild'].south = zones['adventurer guild']
 zones['town exit'].north = zones['town square']
 zones['town exit'].south = zones['very low danger forest']
 zones['town market'].south = zones['town square']

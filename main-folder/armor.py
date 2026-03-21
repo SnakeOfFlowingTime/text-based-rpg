@@ -22,5 +22,7 @@ armors = {
 
 'wood armor': Armor(name = 'Wood Armor', id =  'wood armor', type = 'wood', defense = 2, value = 80),
 
-'leather armor': Armor(name = 'Leather Armor', id = 'leather armor', type = 'leather', defense = 3, value = 300)
+'leather armor': Armor(name = 'Leather Armor', id = 'leather armor', type = 'leather', defense = 3, value = 300),
+
+'iron chainmail armor': Armor(name = 'Iron Chainmail Armor', id = 'iron chainmail armor', type  = 'chainmail', defense = 4, value = 500),
 }
