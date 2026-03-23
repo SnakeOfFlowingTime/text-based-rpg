@@ -68,11 +68,22 @@ description = 'the farms east of town, the source of most food in town',
 item = zones_data['town farm items'], danger = 'No Danger', npc = None),
 
 'alchemy guild': Zones(name = "Alchemist's Guild", id = 'alchemy guild', 
-description = "unlike the adventurer's guild, this place is as luxurious as it gets, being responsible for ranking, protecting the rights of, and representing the most respected profession of the continent: alchemists",
+description = 
+"""unlike the adventurer's guild, this place is as luxurious as it gets,
+being responsible for ranking, protecting the rights of,
+and representing the highest profession of the continent: alchemists""",
 item = zones_data['alchemy guild items'], danger = 'No danger', npc = None),
+
+'medium danger forest': Zones(name = 'Medium Danger Forest', id = 'medium danger forest', 
+description = 
+'''this place is quite far from town,
+the only thing keeping the monster population in control
+is the annual monster slaying event organized by the adventurer's guild ''',
+item = zones_data['medium danger forest items'], danger = 'Medium Danger', npc = None),
+
 }
 
-# Connection between the zones
+# Connection between the zones, hope there's a better way to do this, it's getting big
 zones['town square'].north = zones['town market']
 zones['town square'].south = zones['town exit']
 zones['town square'].west = zones['adventurer guild']
@@ -87,3 +98,5 @@ zones['town market'].south = zones['town square']
 zones['very low danger forest'].north = zones['town exit']
 zones['very low danger forest'].south = zones['low danger forest']
 zones['low danger forest'].north = zones['very low danger forest']
+zones['low danger forest'].south = zones['medium danger forest']
+zones['medium danger forest'].north = zones['low danger forest']

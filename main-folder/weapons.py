@@ -35,5 +35,7 @@ weapons = {
 
 'refined iron sword': Weapon(name = 'Refined Iron Sword', id = 'refined iron sword', type = 'slashing', dmg = 8, value = 200),
 
-'bear punch': Weapon(name = 'Bear Punch', id = 'bear punch', type = 'blunt', dmg = 4, value = 0)
+'bear punch': Weapon(name = 'Bear Punch', id = 'bear punch', type = 'blunt', dmg = 4, value = 0),
+
+'iron spear': Weapon(name = 'Iron Spear', id = 'iron spear', type = 'piercing', dmg = 4, value = 25),
 }

@@ -22,5 +22,9 @@
     "town farm items": {
         "iron scythe": 1
     },
-    "alchemy guild items": {}
+    "alchemy guild items": {},
+    "medium danger forest items": {
+        "small rock": 5,
+        "stick": 10
+    }
 }
