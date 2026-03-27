@@ -15,6 +15,7 @@ class Zones:
 
     def getItem(self, item_name):
         # Get stuff from the zone
+        item_name = ' '.join(item_name)
         if item_name in self.item:
             for key, value in self.item.items():
                 if item_name == key:
@@ -50,7 +51,7 @@ zones = {
 
 'adventurer guild': Zones(name = "The Adventurer's Guild", id = 'adventurer guild',
 description = 'place where adventurers accept task posted by clients in exchange for a reward',
-item = zones_data['adventurer guild items'], danger = 'No Danger', npc = None),
+item = zones_data['adventurer guild items'], danger = 'No Danger', npc = ['quest board']),
 
 'very low danger forest': Zones(name = 'Very Low Danger Forest', id ='very low danger forest',
  description = """there's a lot of trees nearby,
@@ -65,14 +66,14 @@ danger = 'Low Danger', npc = None),
 
 'town farm': Zones(name = 'Town Farms', id = 'town farm', 
 description = 'the farms east of town, the source of most food in town',
-item = zones_data['town farm items'], danger = 'No Danger', npc = None),
+item = zones_data['town farm items'], danger = 'Rat Infestation', npc = None),
 
 'alchemy guild': Zones(name = "Alchemist's Guild", id = 'alchemy guild', 
 description = 
 """unlike the adventurer's guild, this place is as luxurious as it gets,
 being responsible for ranking, protecting the rights of,
 and representing the highest profession of the continent: alchemists""",
-item = zones_data['alchemy guild items'], danger = 'No danger', npc = None),
+item = zones_data['alchemy guild items'], danger = 'No danger', npc = ['alchemy items vendor']),
 
 'medium danger forest': Zones(name = 'Medium Danger Forest', id = 'medium danger forest', 
 description = 

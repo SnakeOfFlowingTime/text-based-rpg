@@ -1,0 +1,30 @@
+{
+    "town square items": {
+        "small rock": 1
+    },
+    "town market items": {
+        "copper coin": 5
+    },
+    "town exit items": {
+        "t0 bandage": 3
+    },
+    "very low danger forest items": {
+        "stick": 2,
+        "small rock": 1
+    },
+    "low danger forest items": {
+        "stick": 5,
+        "small rock": 3
+    },
+    "adventurer guild items": {
+        "copper coin": 2
+    },
+    "town farm items": {
+        "iron scythe": 1
+    },
+    "alchemy guild items": {},
+    "medium danger forest items": {
+        "small rock": 5,
+        "stick": 10
+    }
+}

@@ -1,5 +1,14 @@
-import items, weapons, armor, json, os, sys
+import items, weapons, armor, json, os, sys, quests
 from characters import add_to_inventory
+
+class QuestNpc:
+    def __init__(self, name: str, id: str, description: str, quest: list, location: str):
+        self.name = name
+        self.id = id
+        self.description = description
+        self.quest = quest
+        self.location = location
+        
 # Merchant npcs
 class Merchant:
     def __init__(self, name: str, id: str, description: str, selling: dict, location: str):
@@ -10,68 +19,62 @@ class Merchant:
         self.location = location
     
     # For the player to sell stuff, should be working
-    def buy(self, target):
-        print('what would you like to sell?')
-        print(target.inv)
-        sell = input('>').lower()
+    def buy(self, target, item, number):
         try:
             
             # Checks if it's a real item
-            if sell in target.inv and sell in items.items or sell in weapons.weapons or sell in armor.armors:
-                if sell in items.items.keys():
-                    if items.items[f'{sell}'].value == 0:
-                        print(f'this item ({sell}) is worthless/cannot be sold')
+            if item in target.inv and item in items.items or item in weapons.weapons or item in armor.armors:
+                if item in items.items.keys():
+                    if items.items[f'{item}'].value == 0:
+                        print(f'this item ({item}) is worthless/cannot be sold')
                         return
-                if sell in weapons.weapons.keys():
-                    if weapons.weapons[f'{sell}'].value == 0:
-                        print(f'this item ({sell}) is worthless/cannot be sold')
+                if item in weapons.weapons.keys():
+                    if weapons.weapons[f'{item}'].value == 0:
+                        print(f'this item ({item}) is worthless/cannot be sold')
                         return
-                if sell in armor.armors.keys():
-                    if armor.armors[f'{sell}'].value == 0:
-                        print(f'this item ({sell}) is worthless/cannot be sold')
+                if item in armor.armors.keys():
+                    if armor.armors[f'{item}'].value == 0:
+                        print(f'this item ({item}) is worthless/cannot be sold')
                         return
-                print('and how many would you like to sell?')
-                number = input('>').lower()
-                number = int(number)
                 
                 # Checks if number is positive and deducts the item from player and gives the money
-                if number > 0 and sell in items.items and items.items[f'{sell}'].value != 0:
-                    if number < target.inv[sell]:
-                        target.inv[sell] -= number
-                        target.money += items.items[sell].value * number
-                        print(f"you've sold: {number} {sell}")
-                    elif number == target.inv[sell]:
-                        target.money += items.items[sell].value * number
-                        del target.inv[sell]
-                        print(f"you've sold: {number} {sell}")
+                if number != None and number > 0 and item in items.items and items.items[f'{item}'].value != 0:
+                    if number < target.inv[item]:
+                        target.inv[item] -= number
+                        target.money += items.items[item].value * number
+                        print(f"you've sold: {number} {item}")
+                    elif number == target.inv[item]:
+                        target.money += items.items[item].value * number
+                        del target.inv[item]
+                        print(f"you've sold: {number} {item}")
                     else:
-                        print(f"you don't have that much {sell} to sell")
-                elif number > 0 and sell in weapons.weapons and weapons.weapons[f'{sell}'].value != 0:
-                    if number < target.inv[sell]:
-                        target.inv[sell] -= number
-                        target.money += weapons.weapons[sell].value * number
-                        print(f"you've sold: {number} {sell}")
-                    elif number == target.inv[sell]:
-                        target.money += weapons.weapons[sell].value * number
-                        del target.inv[sell]
-                        print(f"you've sold: {number} {sell}")
+                        print(f"you don't have that much {item} to sell")
+                elif number != None and number > 0 and item in weapons.weapons and weapons.weapons[f'{item}'].value != 0:
+                    if number < target.inv[item]:
+                        target.inv[item] -= number
+                        target.money += weapons.weapons[item].value * number
+                        print(f"you've sold: {number} {item}")
+                    elif number == target.inv[item]:
+                        target.money += weapons.weapons[item].value * number
+                        del target.inv[item]
+                        print(f"you've sold: {number} {item}")
                     else:
-                        print(f"you don't have that much {sell} to sell")
-                elif number > 0 and sell in armor.armors and armor.armors[f'{sell}'].value != 0:
-                    if number < target.inv[sell]:
-                        target.inv[sell] -= number
-                        target.money += armor.armors[sell].value * number
-                        print(f"you've sold: {number} {sell}")
-                    elif number == target.inv[sell]:
-                        target.money += armor.armors[sell].value * number
-                        del target.inv[sell]
-                        print(f"you've sold: {number} {sell}")
+                        print(f"you don't have that much {item} to sell")
+                elif number != None and number > 0 and item in armor.armors and armor.armors[f'{item}'].value != 0:
+                    if number < target.inv[item]:
+                        target.inv[item] -= number
+                        target.money += armor.armors[item].value * number
+                        print(f"you've sold: {number} {item}")
+                    elif number == target.inv[item]:
+                        target.money += armor.armors[item].value * number
+                        del target.inv[item]
+                        print(f"you've sold: {number} {item}")
                     else:
-                        print(f"you don't have that much {sell} to sell")
+                        print(f"you don't have that much {item} to sell")
                 else:
                     print('please enter a positive non zero number or the item you are trying to sell is worthless/cannot be sold')
             else:
-                print(f"you don't have {sell}")
+                print(f"you don't have {item}")
         except ValueError:
             print('please enter a number in digit form')
 
@@ -181,11 +184,19 @@ with open(merchant_file) as merchant_save:
     merchant_data = json.load(merchant_save)
 
 
+# Quest npcs
+quest_npcs = {'quest board': QuestNpc(name = 'Quest Board', id = 'quest board', 
+description = "the quest board of the adventure's guild", quest = ['gather slime chunks', 'clear rat infestation'],
+location = 'adventurer guild')}
+
 # Merchant npcs
-merchants = {'town merchant': Merchant(name = 'Town Nerchant', id = 'town merchant',
-                                       description = 'just an ordinary merchant in an ordinary town',
-                                       selling = merchant_data['town market merchant stock'], location ='town market',
-                                       )
+merchants = {'town merchant': Merchant(name = 'Town Merchant', id = 'town merchant',
+description = 'just an ordinary merchant in an ordinary town',
+selling = merchant_data['town market merchant stock'], location = 'town market'),
+
+'alchemy items vendor': Merchant(name = 'Alchemy Items Vendor', id = 'alchemy items vendor', 
+description = 'a vendor consigned by some alchemists to sell some of their products', 
+selling = merchant_data['alchemy items vendor stock'], location = 'alchemy guild')
 
 
 

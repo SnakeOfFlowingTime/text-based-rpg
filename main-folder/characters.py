@@ -3,7 +3,7 @@ import weapons, armor, items, time
 
 # Player character
 class Character:
-    def __init__(self, name: str, max_hp: int, hp: int, inv: dict, weapon, armor, lvl: int, exp: int, money: int):
+    def __init__(self, name: str, max_hp: int, hp: int, inv: dict, weapon, armor, lvl: int, exp: int, money: int, quests_completed: list):
         self.name     = name
         self.max_hp   = max_hp
         self.hp       = hp
@@ -13,6 +13,7 @@ class Character:
         self.lvl = lvl
         self.exp = exp
         self.money = money
+        self.quests_completed = quests_completed
 
 
     def attack(self, target):
@@ -29,16 +30,13 @@ class Character:
             self.lvl += 1
             self.max_hp = self.max_hp + (self.lvl - 1) * 2
             self.hp = self.max_hp
-            print(f'you have succefuly leveled up, you are now level: {self.lvl}')
+            print(f'you have leveled up, you are now level: {self.lvl}')
             print(f'your remaining experience: {self.exp} points')
         else:
             print(f"you don't have enough experience points to level up, current exp: {self.exp}, exp needed to level up: {self.lvl * 100}")
 
-    def rest(self):
+    def rest(self, number):
         # Rest, heals for number after number * 2 of seconds
-        print('how long to rest?')
-        number = input('>')
-        number = int(number)
         try:
             if number >= 0:
                 print(f'resting for {number * 2} hours...')
@@ -52,57 +50,64 @@ class Character:
         except ValueError:
             print('you must enter a number in digit form')
 
-    def change_weapon(self):
+    def change_weapon(self, weapon_equip):
         # Allows the player to change weapon
-        player_input = input('>').lower()
-        if player_input in self.inv and player_input in weapons.weapons.keys():
+        if weapon_equip in self.inv and weapon_equip in weapons.weapons.keys():
+            if self.lvl >= weapons.weapons[weapon_equip].lvlreq:
+                pass
+            else:
+                print("you don't meet the minimun requirements to use this weapon")
+                return
             add_to_inventory(self.inv, {self.weapon.id: 1})
             try:
-                self.weapon = weapons.weapons[player_input]
-                if self.inv[player_input] > 1:
-                    self.inv[player_input] -= 1
+                self.weapon = weapons.weapons[weapon_equip]
+                if self.inv[weapon_equip] > 1:
+                    self.inv[weapon_equip] -= 1
                 else:
-                    del self.inv[player_input]
+                    del self.inv[weapon_equip]
             except KeyError:
                 print("there is no such weapon in the inventory")
         else:
             print("there is no such weapon in the inventory")
 
-    def change_armor(self):
+    def change_armor(self, armor_equip):
         # Allows the player to change armor
-        player_input = input('>').lower()
-        if player_input in self.inv and player_input in armor.armors.keys():
+        if armor_equip in self.inv and armor_equip in armor.armors.keys():
+            if self.lvl >= armor.armors[armor_equip].lvlreq:
+                pass
+            else:
+                print("you don't meet the minimun requirements to use this armor")
+                return
             add_to_inventory(self.inv, {self.armor.id: 1})
             try:
-                self.armor = armor.armors[player_input]
-                if self.inv[player_input] > 1:
-                    self.inv[player_input] -= 1
+                self.armor = armor.armors[armor_equip]
+                if self.inv[armor_equip] > 1:
+                    self.inv[armor_equip] -= 1
                 else:
-                    del self.inv[player_input]
+                    del self.inv[armor_equip]
             except KeyError:
                 print("there is no such armor in the inventory")
         else:
             print("there is no such armor in the inventory")
     
-    def heal_self(self):
+    def heal_self(self, heal_item):
         # Allows the player to consume a healing item to recover hp
-        player_input = input('>').lower()
-        if player_input in self.inv and player_input in items.items.keys() and items.items[player_input].type == 'healing':
-            print(f'used {player_input} to heal {items.items[player_input].hpheal} health points')
+        if heal_item in self.inv and heal_item in items.items.keys() and items.items[heal_item].type == 'healing':
+            print(f'used {heal_item} to heal {items.items[heal_item].hpheal} health points')
             try:
-                if self.hp + items.items[player_input].hpheal > self.max_hp and self.inv[player_input] == 1:
+                if self.hp + items.items[heal_item].hpheal > self.max_hp and self.inv[heal_item] == 1:
                     self.hp = self.max_hp
-                    del self.inv[player_input]
-                elif self.hp + items.items[player_input].hpheal > self.max_hp and self.inv[player_input] > 1:
+                    del self.inv[heal_item]
+                elif self.hp + items.items[heal_item].hpheal > self.max_hp and self.inv[heal_item] > 1:
                     self.hp = self.max_hp
-                    self.inv[player_input] -= 1
+                    self.inv[heal_item] -= 1
                 else:
-                    if self.inv[player_input] > 1:
-                        self.hp += items.items[player_input].hpheal
-                        self.inv[player_input] -= 1
-                    elif self.inv[player_input] == 1:
-                        self.hp += items.items[player_input].hpheal
-                        del self.inv[player_input]
+                    if self.inv[heal_item] > 1:
+                        self.hp += items.items[heal_item].hpheal
+                        self.inv[heal_item] -= 1
+                    elif self.inv[heal_item] == 1:
+                        self.hp += items.items[heal_item].hpheal
+                        del self.inv[heal_item]
             except KeyError:
                 print("there is no such healing item in the inventory")
         else:
@@ -154,9 +159,9 @@ enemies = {
                 armor = armor.armors['no armor'], expvalue = 10, loot = {'rusty dagger': 1, 'rag': 1}),
 'slime': Enemy(name = 'Slime', max_hp = 8, hp = 8, weapon = weapons.weapons['acid body'],
                armor = armor.armors['no armor'], expvalue = 20, loot = {'slime chunk': 1}),                
-'wild boar': Enemy(name = 'Wild Boar', max_hp = 20, hp = 20, weapon = weapons.weapons['boar tusk'],
+'wild boar': Enemy(name = 'Wild Boar', max_hp = 20, hp = 20, weapon = weapons.weapons['boar tusks'],
                    armor = armor.armors['hardened mud layer'], expvalue = 50, 
-                   loot = {'boar tusk': 2, 'boar skin': 1, 'strong animal bone': 10, 'meat': 15, 'boar hoof': 4}),
+                   loot = {'boar tusk': 4, 'boar skin': 1, 'strong animal bone': 10, 'meat': 15, 'boar hoof': 4}),
 'wolf': Enemy(name = 'Wolf', max_hp = 15, hp = 15, weapon = weapons.weapons['wolf bite'], armor = armor.armors['no armor'], expvalue = 40,
             loot = {'wolf skin': 1, 'wolf tooth': 4, 'strong animal bone': 20, 'meat': 15, 'wolf claw': 18}),
 'big rat': Enemy(name = 'Magic Mutated Rat', max_hp= 4, hp = 4, weapon = weapons.weapons['rat bite'],

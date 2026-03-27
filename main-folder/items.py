@@ -19,14 +19,18 @@ class HealItem(Item):
 items = {
 't0 bandage': HealItem(name = 'Slime-Based Bandages', id = 't0 bandage',
 description = 'bandages infused with specially treated slime, very effective in healing small wounds', 
-value = 1, type = 'healing',hpheal = 3),
+value = 1, type = 'healing', hpheal = 3),
 
 'rag': Item(name = 'Rag', id = 'rag', description = 'a torn and dirty of rag', type = 'miscellaneous',value = 1),
 
 'slime chunk': Item(name = 'Slime Chunck', id = 'slime chunk',
-                    description = 'low level ingredient widely used in alchemy, sourced from slimes', type = 'alchemy ingredient',value = 2),
+description = 'low level ingredient widely used in alchemy, sourced from slimes', type = 'alchemy ingredient',value = 2),
 
 'copper coin': Item(name = 'Copper coin', id = 'copper coin', description = 'coin made from copper', type = 'money', value = 1),
+
+'silver coin': Item(name = 'Silver Coin', id = 'silver coin', description = 'coin made from silver', type = 'money', value = 100),
+
+'gold coin': Item(name = 'Gold Coin', id = 'gold coin', description = 'coin made from gold', type = 'money', value = 10000),
 
 'small rock': Item(name = 'Small Rock', id = 'small rock', description = 'a small of stone', type = 'miscellaneous',value = 0),
 
@@ -46,6 +50,9 @@ type = 'animal drop', value = 2),
 'meat': Item(name = 'Meat', id = 'meat', 
 description = 'good meat that has a lot of nutrients, each piece is 1kg',
 type = 'animal drop', value = 1),
+
+'boar tusk': Item(name = 'Wild Boar Tusk', id = 'boar tusk', 
+description = 'the tusk of a wild boar, useful as a material', type = 'animal drop', value = 5),
 
 'boar hoof': Item(name = 'Wild Boar Hoof', id = 'boar hoof', 
 description = 'the hoof of a wild boar, can be used for cooking or futher processed for some useful materials',
