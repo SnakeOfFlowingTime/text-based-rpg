@@ -6,7 +6,7 @@ def title_screen_options():
     while valid_command == False: 
         # Main menu text
         os.system('cls' if os.name == 'nt' else 'clear')
-        print('Welcome to Placeholder Text-Based RPG Game')
+        print('Welcome to Alchemy Ascension Text RPG')
         print("Type 'play' to start the game")
         print("Type 'help' to open the help menu")
         print("Type 'quit' to close the game") 
@@ -28,11 +28,11 @@ def title_screen_options():
                 yes_no = input('>').lower()
                 
                 # Wipe save file
-                if yes_no == 'y':
+                if yes_no in ['y', 'yes']:
                     return 'wipe'
                 
                 # Not wipe save file
-                elif yes_no == 'n':   
+                elif yes_no in ['n', 'no']:   
                     valid_command = False
             
             else:
